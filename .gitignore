@@ -7,3 +7,10 @@ __pycache__/
 .env
 
 data/raw/
+
+# SQL Database Projects build artifacts
+**/bin/
+**/obj/
+**/Debug/
+**/Release/
+*.dacpac
