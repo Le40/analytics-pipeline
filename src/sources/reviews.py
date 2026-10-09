@@ -1,5 +1,5 @@
 import pandas as pd
-from src.config import REVIEWS_CSV, CREATE_REVIEWS_SQL
+from src.config import REVIEWS_CSV
 from src import ingestion
 
 SOURCE_NAME = "reviews"
@@ -34,7 +34,6 @@ def run() -> None:
         csv_path=REVIEWS_CSV,
         source_name=SOURCE_NAME,
         expected_columns=EXPECTED_COLUMNS,
-        unique_key=UNIQUE_KEY,
-        create_table_sql=CREATE_REVIEWS_SQL,
         transform=transform,
+        unique_key=UNIQUE_KEY
     )

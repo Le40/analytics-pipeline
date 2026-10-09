@@ -8,11 +8,11 @@ def run_source(
         csv_path: Path,
         source_name : str,
         expected_columns : set[str],
-        unique_key: tuple[str,...] | None,
-        create_table_sql: Path,
         transform: Callable[[pd.DataFrame], pd.DataFrame],
+        unique_key: tuple[str,...] | None,
+        csv_dtypes: dict[str, str] | None = None,
 ):
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, dtype=csv_dtypes)
 
     validation.validate_source(
             df=df,
@@ -22,8 +22,6 @@ def run_source(
         )
 
     df = transform(df)
-    
-    db.execute_sql_file(create_table_sql)
 
     db.load_dataframe(
         df=df,

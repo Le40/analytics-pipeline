@@ -1,5 +1,5 @@
 import pandas as pd
-from src.config import PAYMENTS_CSV, CREATE_PAYMENTS_SQL
+from src.config import PAYMENTS_CSV
 from src import ingestion
 
 SOURCE_NAME = "payments"
@@ -25,7 +25,6 @@ def run() -> None:
         csv_path=PAYMENTS_CSV,
         source_name=SOURCE_NAME,
         expected_columns=EXPECTED_COLUMNS,
-        unique_key=UNIQUE_KEY,
-        create_table_sql=CREATE_PAYMENTS_SQL,
-        transform=transform
+        transform=transform,
+        unique_key=UNIQUE_KEY
     )

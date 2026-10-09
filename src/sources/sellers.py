@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.config import SELLERS_CSV, CREATE_SELLERS_SQL
+from src.config import SELLERS_CSV
 from src import ingestion
 
 
@@ -17,6 +17,13 @@ UNIQUE_KEY: tuple[str, ...] = ("seller_id",)
 
 
 def transform(sellers: pd.DataFrame) -> pd.DataFrame:
+    sellers = sellers.copy()
+
+    sellers["seller_zip_code_prefix"] = (
+        sellers["seller_zip_code_prefix"]
+        .astype("string")
+        .str.zfill(5)
+    )
     return sellers
 
 
@@ -25,7 +32,7 @@ def run() -> None:
         csv_path=SELLERS_CSV,
         source_name=SOURCE_NAME,
         expected_columns=EXPECTED_COLUMNS,
-        unique_key=UNIQUE_KEY,
-        create_table_sql=CREATE_SELLERS_SQL,
         transform=transform,
+        unique_key=UNIQUE_KEY,
+        csv_dtypes={"seller_zip_code_prefix": "string"}
     )

@@ -14,12 +14,3 @@ PRODUCTS_CSV = RAW_DATA_DIR / "olist_products_dataset.csv"
 CATEGORY_TRANSLATION_CSV = RAW_DATA_DIR / "product_category_name_translation.csv"
 
 SQL_DIR = PROJECT_ROOT / "sql"
-CREATE_ORDERS_SQL = SQL_DIR / "staging" / "create_orders.sql"
-CREATE_ORDER_ITEMS_SQL = SQL_DIR / "staging" / "create_order_items.sql"
-CREATE_PAYMENTS_SQL = SQL_DIR / "staging" / "create_payments.sql"
-CREATE_REVIEWS_SQL = SQL_DIR / "staging" / "create_reviews.sql"
-
-CREATE_CUSTOMERS_SQL = SQL_DIR / "staging" / "create_customers.sql"
-CREATE_SELLERS_SQL = SQL_DIR / "staging" / "create_sellers.sql"
-CREATE_PRODUCTS_SQL = SQL_DIR / "staging" / "create_products.sql"
-CREATE_CATEGORY_TRANSLATION_SQL = SQL_DIR / "staging" / "create_category_translation.sql"

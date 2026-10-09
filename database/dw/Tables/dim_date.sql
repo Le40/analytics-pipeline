@@ -8,7 +8,9 @@ CREATE TABLE [dw].[dim_date] (
     [day]         INT          NOT NULL,
     [day_of_week] INT          NOT NULL,
     [day_name]    VARCHAR (10) NOT NULL,
-    PRIMARY KEY CLUSTERED ([date_key] ASC)
+
+    CONSTRAINT PK_dim_date
+        PRIMARY KEY CLUSTERED (date_key)
 );
 
 

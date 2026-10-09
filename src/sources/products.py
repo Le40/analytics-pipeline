@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.config import PRODUCTS_CSV, CREATE_PRODUCTS_SQL
+from src.config import PRODUCTS_CSV
 from src import ingestion
 
 
@@ -30,7 +30,6 @@ def run() -> None:
         csv_path=PRODUCTS_CSV,
         source_name=SOURCE_NAME,
         expected_columns=EXPECTED_COLUMNS,
-        unique_key=UNIQUE_KEY,
-        create_table_sql=CREATE_PRODUCTS_SQL,
         transform=transform,
+        unique_key=UNIQUE_KEY
     )

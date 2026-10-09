@@ -1,5 +1,5 @@
 import pandas as pd
-from src.config import ORDER_ITEMS_CSV, CREATE_ORDER_ITEMS_SQL
+from src.config import ORDER_ITEMS_CSV
 from src import ingestion
 
 SOURCE_NAME = "order_items"
@@ -29,7 +29,6 @@ def run() -> None:
         csv_path=ORDER_ITEMS_CSV,
         source_name=SOURCE_NAME,
         expected_columns=EXPECTED_COLUMNS,
-        unique_key=UNIQUE_KEY,
-        create_table_sql=CREATE_ORDER_ITEMS_SQL,
-        transform=transform
+        transform=transform,
+        unique_key=UNIQUE_KEY
     )

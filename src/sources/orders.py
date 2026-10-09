@@ -1,5 +1,5 @@
 import pandas as pd
-from src.config import ORDERS_CSV, CREATE_ORDERS_SQL
+from src.config import ORDERS_CSV
 from src import ingestion
 
 SOURCE_NAME = "orders"
@@ -40,7 +40,6 @@ def run() -> None:
         csv_path=ORDERS_CSV,
         source_name=SOURCE_NAME,
         expected_columns=EXPECTED_COLUMNS,
-        unique_key=UNIQUE_KEY,
-        create_table_sql=CREATE_ORDERS_SQL,
-        transform=transform
+        transform=transform,
+        unique_key=UNIQUE_KEY
     )

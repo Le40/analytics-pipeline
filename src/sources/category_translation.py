@@ -1,9 +1,6 @@
 import pandas as pd
 
-from src.config import (
-    CATEGORY_TRANSLATION_CSV,
-    CREATE_CATEGORY_TRANSLATION_SQL,
-)
+from src.config import CATEGORY_TRANSLATION_CSV
 from src import ingestion
 
 
@@ -26,7 +23,6 @@ def run() -> None:
         csv_path=CATEGORY_TRANSLATION_CSV,
         source_name=SOURCE_NAME,
         expected_columns=EXPECTED_COLUMNS,
-        unique_key=UNIQUE_KEY,
-        create_table_sql=CREATE_CATEGORY_TRANSLATION_SQL,
         transform=transform,
+        unique_key=UNIQUE_KEY
     )

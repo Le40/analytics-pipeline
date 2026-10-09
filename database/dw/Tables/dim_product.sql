@@ -8,8 +8,11 @@ CREATE TABLE [dw].[dim_product] (
     [height_cm]             DECIMAL (10, 2) NULL,
     [width_cm]              DECIMAL (10, 2) NULL,
     
-    PRIMARY KEY CLUSTERED ([product_key] ASC),
-    UNIQUE NONCLUSTERED ([product_id] ASC)
+    CONSTRAINT PK_dim_product
+        PRIMARY KEY CLUSTERED (product_key),
+
+    CONSTRAINT UQ_dim_product_id
+        UNIQUE NONCLUSTERED (product_id)
 );
 
 
