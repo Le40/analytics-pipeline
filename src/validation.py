@@ -19,11 +19,29 @@ def validate_source(
         raise ValueError(f"{df.Name} source contains no rows.")
 
     if unique_key is not None:
+        # check for nulls  
+        if df[list(unique_key)].isna().any().any():
+            raise ValueError(
+                f"{source_name} source contains NULL values in key: {unique_key}"
+            )
+
+        # check for empty strings in id keys
+        for col_name in unique_key:
+            if df[col_name].dtype == "object":
+                df[col_name] = df[col_name].str.strip()
+                if df[col_name].eq("").any():
+                    raise ValueError(
+                        f"{source_name} contains blank values in key column: {col_name}"
+                    )
+        
+        # check for duplicates
         if df.duplicated(subset=list(unique_key)).any():
             raise ValueError(
                 f"{source_name} source contains duplicate key values "
                 f"for {list(unique_key)}."
             )
+        
+        
 
 def validate_row_count(
     expected_count: int,
