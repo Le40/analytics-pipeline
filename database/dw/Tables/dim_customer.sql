@@ -9,6 +9,4 @@ CREATE TABLE [dw].[dim_customer] (
         UNIQUE NONCLUSTERED (customer_unique_id)
 );
 
-
 GO
-

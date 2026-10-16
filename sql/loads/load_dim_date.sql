@@ -4,45 +4,7 @@ DECLARE @max_date DATE;
 SELECT
     @min_date = MIN(date_value),
     @max_date = MAX(date_value)
-FROM (
-    SELECT CAST(order_purchase_timestamp AS DATE) AS date_value
-    FROM stg.orders
-
-    UNION ALL
-
-    SELECT CAST(order_approved_at AS DATE)
-    FROM stg.orders
-
-    UNION ALL
-
-    SELECT CAST(order_delivered_carrier_date AS DATE)
-    FROM stg.orders
-
-    UNION ALL
-
-    SELECT CAST(order_delivered_customer_date AS DATE)
-    FROM stg.orders
-
-    UNION ALL
-
-    SELECT CAST(order_estimated_delivery_date AS DATE)
-    FROM stg.orders
-
-    UNION ALL
-
-    SELECT CAST(shipping_limit_date AS DATE)
-    FROM stg.order_items
-
-    UNION ALL
-
-    SELECT CAST(review_creation_date AS DATE)
-    FROM stg.reviews
-
-    UNION ALL
-
-    SELECT CAST(review_answer_timestamp AS DATE)
-    FROM stg.reviews
-) AS all_dates;
+FROM stg.v_source_dates;
 
 
 WITH date_series AS (
