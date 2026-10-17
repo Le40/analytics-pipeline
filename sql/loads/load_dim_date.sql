@@ -2,8 +2,8 @@ DECLARE @min_date DATE;
 DECLARE @max_date DATE;
 
 SELECT
-    @min_date = MIN(date_value),
-    @max_date = MAX(date_value)
+    @min_date = MIN(full_date),
+    @max_date = MAX(full_date)
 FROM stg.v_source_dates;
 
 

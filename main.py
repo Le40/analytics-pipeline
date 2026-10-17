@@ -1,13 +1,11 @@
-from src.sources import customers, order_items, orders, payments, products, sellers, reviews, category_translation
+from src.staging import staging_pipeline
+from src.warehouse import warehouse_pipeline
 
 
-orders.run()
-customers.run()
-order_items.run()
-payments.run()
-reviews.run()
-products.run()
-sellers.run()
-category_translation.run()
+def main() -> None:
 
-print("COMPLETE")
+    staging_pipeline.load_staging()
+    warehouse_pipeline.load_warehouse()
+
+if __name__ == "__main__":
+    main()

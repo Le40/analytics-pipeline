@@ -1,8 +1,8 @@
 import pyodbc
 from pathlib import Path
 from datetime import date
-from src.db import CONNECTION_STRING
-from src.dwh_reconciliation.config import KEY_CHECKS, FINANCIAL_CHECKS
+from src.config import CONNECTION_STRING
+from src.warehouse.reconciliation.config import KEY_CHECKS, FINANCIAL_CHECKS
 
 
 def reconcile_keys(cursor: pyodbc.Cursor) -> int:
@@ -147,21 +147,25 @@ def reconcile_translations(cursor: pyodbc.Cursor) -> int:
     return missing + incorrect + inconsistent
 
 
-def main() -> None:
-    with pyodbc.connect(CONNECTION_STRING) as connection:
-        cursor = connection.cursor()
+def reconcile(cursor: pyodbc.Cursor) -> int:
 
-        errors = 0
-        errors += reconcile_keys(cursor)
-        errors += reconcile_financials(cursor)
-        errors += reconcile_dates(cursor)
-        errors += reconcile_translations(cursor)
+    errors = 0
+    errors += reconcile_keys(cursor)
+    errors += reconcile_financials(cursor)
+    errors += reconcile_dates(cursor)
+    errors += reconcile_translations(cursor)
 
-    if errors:
-        raise SystemExit("RECONCILIATION FAILED")
+    if errors > 0:
+        print(f"DWH RECONCILIATION FAILED: {errors} errors")
+    else:
+        print("DWH RECONCILIATION PASSED")
 
-    print("RECONCILIATION PASSED")
+    return errors
 
 
 if __name__ == "__main__":
-    main()
+    with pyodbc.connect(CONNECTION_STRING) as connection:
+        errors = reconcile(connection.cursor())
+
+        if errors:
+            raise RuntimeError(f"DWH reconciliation failed: {errors} errors")

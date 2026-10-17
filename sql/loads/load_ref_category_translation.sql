@@ -1,5 +1,4 @@
 SET XACT_ABORT ON;
-BEGIN TRANSACTION;
 
 -- 1. Load original translations
 INSERT INTO dw.ref_category_translation (
@@ -36,5 +35,3 @@ SET p.category_name_english = t.product_category_name_english
 FROM dw.dim_product AS p
 JOIN dw.ref_category_translation AS t
     ON p.category_name = t.product_category_name;
-
-COMMIT;

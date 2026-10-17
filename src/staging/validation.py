@@ -1,10 +1,9 @@
 import pandas as pd
 
-def validate_source(
+def validate_structure(
         df: pd.DataFrame, 
         source_name: str,
         expected_columns: set[str],
-        unique_key: tuple[str,...] | None = None
 ) -> None:
     
     missing_columns = expected_columns - set(df.columns)
@@ -16,8 +15,14 @@ def validate_source(
         )
 
     if df.empty:
-        raise ValueError(f"{df.Name} source contains no rows.")
+        raise ValueError(f"{source_name} source contains no rows.")
 
+def validate_keys(
+        df: pd.DataFrame, 
+        source_name: str,
+        unique_key: tuple[str,...] | None = None
+) -> None:
+    
     if unique_key is not None:
         # check for nulls  
         if df[list(unique_key)].isna().any().any():
