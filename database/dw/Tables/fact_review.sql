@@ -2,6 +2,7 @@ CREATE TABLE [dw].[fact_review] (
     [review_id]        VARCHAR (32)   NOT NULL,
     [order_id]         VARCHAR (32)   NOT NULL,
     [customer_key]     INT            NOT NULL,
+    [location_key]     INT            NOT NULL, -- Fulfillment-associated customer location
     [send_date_key]    INT            NOT NULL,
     [answer_date_key]  INT            NOT NULL,
     [score]            INT            NOT NULL,
@@ -20,6 +21,10 @@ CREATE TABLE [dw].[fact_review] (
     CONSTRAINT FK_review_customer    
         FOREIGN KEY (customer_key)
         REFERENCES dw.dim_customer(customer_key),
+
+    CONSTRAINT FK_review_location    
+        FOREIGN KEY (location_key)
+        REFERENCES dw.dim_location(location_key),
 
     CONSTRAINT FK_review_send_date
         FOREIGN KEY (send_date_key)

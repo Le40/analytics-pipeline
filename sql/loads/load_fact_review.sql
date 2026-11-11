@@ -1,3 +1,4 @@
+/* Keep only latest review for each review_id, as there were mutliple same reviews for each fullfillment or customer updated the review*/
 WITH unique_reviews AS (
     SELECT
         *,
@@ -23,7 +24,8 @@ INSERT INTO dw.fact_review (
     SELECT
         r.review_id,
         r.order_id,
-        dc.customer_key,
+        fo.customer_key,
+        fo.location_key,
         send_date.date_key AS send_date_key,
         answer_date.date_key AS answer_date_key,
         r.review_score,
@@ -34,14 +36,8 @@ INSERT INTO dw.fact_review (
 
     FROM unique_reviews AS r
 
-    JOIN stg.orders AS o
-        ON o.order_id = r.order_id
-
-    JOIN stg.customers AS c
-        ON c.customer_id = o.customer_id
-
-    JOIN dw.dim_customer AS dc
-        ON dc.customer_unique_id = c.customer_unique_id
+    JOIN dw.fact_order AS fo
+        ON fo.order_id = r.order_id
 
     JOIN dw.dim_date AS send_date
         ON CAST(r.review_creation_date AS DATE) = send_date.full_date

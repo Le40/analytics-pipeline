@@ -2,6 +2,7 @@ CREATE TABLE [dw].[fact_payment] (
     [order_id]           VARCHAR (32)    NOT NULL,
     [payment_sequential] INT             NOT NULL,
     [customer_key]       INT             NOT NULL,
+    [location_key]       INT             NOT NULL, -- Fulfillment-associated customer location
     [purchase_date_key]  INT             NOT NULL,
     [payment_type]       VARCHAR (20)    NOT NULL,
     [installments]       INT             NOT NULL,
@@ -17,6 +18,10 @@ CREATE TABLE [dw].[fact_payment] (
     CONSTRAINT FK_payment_customer    
         FOREIGN KEY (customer_key)
         REFERENCES dw.dim_customer(customer_key),
+
+    CONSTRAINT FK_payment_location    
+        FOREIGN KEY (location_key)
+        REFERENCES dw.dim_location(location_key),
 
     CONSTRAINT FK_payment_purchase_date
         FOREIGN KEY (purchase_date_key)

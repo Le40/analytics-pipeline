@@ -10,24 +10,16 @@ INSERT INTO dw.fact_payment(
     SELECT
         p.order_id,
         p.payment_sequential,
-        dc.customer_key,
-        dd.date_key AS purchase_date_key,
+        fo.customer_key,
+        fo.location_key,
+        fo.date_key AS purchase_date_key,
         p.payment_type,
         p.payment_installments,
         p.payment_value
     FROM stg.payments AS p 
 
-    JOIN stg.orders AS o 
-        ON o.order_id = p.order_id
-
-    JOIN stg.customers AS c
-        ON c.customer_id = o.customer_id
-
-    JOIN dw.dim_customer AS dc
-        ON dc.customer_unique_id = c.customer_unique_id
-
-    JOIN dw.dim_date AS dd
-        ON CAST(o.order_purchase_timestamp AS DATE) = dd.full_date
+    JOIN dw.fact_order AS fo
+        ON fo.order_id = p.order_id
         
 WHERE NOT EXISTS (
     SELECT 1

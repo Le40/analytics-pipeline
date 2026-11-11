@@ -4,6 +4,8 @@ CREATE TABLE [dw].[fact_order_item] (
     [product_key]              INT             NOT NULL,
     [seller_key]               INT             NOT NULL,
     [purchase_date_key]        INT             NOT NULL,
+    [customer_key]              INT             NOT NULL, -- Customer info
+    [location_key]              INT             NOT NULL, -- Fulfillment-associated customer location
     [shipping_limit_timestamp] DATETIME2 (7)   NOT NULL,
     [price]                    DECIMAL (12, 2) NOT NULL,
     [freight_value]            DECIMAL (12, 2) NOT NULL,
@@ -19,9 +21,17 @@ CREATE TABLE [dw].[fact_order_item] (
         FOREIGN KEY (product_key)
         REFERENCES dw.dim_product(product_key),
 
-     CONSTRAINT FK_order_item_seller    
+    CONSTRAINT FK_order_item_seller    
         FOREIGN KEY (seller_key)
         REFERENCES dw.dim_seller(seller_key),
+
+    CONSTRAINT FK_order_item_customer    
+        FOREIGN KEY (customer_key)
+        REFERENCES dw.dim_customer(customer_key),
+
+    CONSTRAINT FK_order_item_location   
+        FOREIGN KEY (location_key)
+        REFERENCES dw.dim_location(location_key),
 
     CONSTRAINT FK_order_item_purchase_date
         FOREIGN KEY (purchase_date_key)
