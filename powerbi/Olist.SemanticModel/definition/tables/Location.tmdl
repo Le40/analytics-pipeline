@@ -1,0 +1,58 @@
+table Location
+	lineageTag: e1782d73-14e5-4bdf-a1ea-fc0e41e1b4a6
+
+	column location_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 69488899-e1a1-464b-a2dd-794030a3bef7
+		summarizeBy: none
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column zip_code_prefix
+		dataType: string
+		lineageTag: 97e396ee-c28b-4a94-a4b4-965f392cbc90
+		summarizeBy: none
+		sourceColumn: zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: b7ec268a-a429-4636-81e4-c035d3f56fc6
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 09ece7bc-4df0-4ca6-aefa-ad4e814fce08
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country = "Brazil"
+		lineageTag: c633fcda-d2ce-491a-a43a-d79bcba22ed3
+		dataCategory: Country
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Location = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "dim_location"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,190 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "d0cf1393e845dbccb515",
+  "position": {
+    "x": 16,
+    "y": 128,
+    "z": 2000,
+    "height": 112.00000000000001,
+    "width": 1440,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Order Items"
+                    }
+                  },
+                  "Property": "Product Sales"
+                }
+              },
+              "queryRef": "dw fact_order_item.Product Sales",
+              "nativeQueryRef": "Product Sales",
+              "format": "\"R$ \"#,##0.00"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Order Items"
+                    }
+                  },
+                  "Property": "Freight Value"
+                }
+              },
+              "queryRef": "dw fact_order_item.Freight Value",
+              "nativeQueryRef": "Freight Value",
+              "format": "\"R$ \"#,##0.00"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Order Items"
+                    }
+                  },
+                  "Property": "Revenue"
+                }
+              },
+              "queryRef": "dw fact_order.Revenue",
+              "nativeQueryRef": "Revenue",
+              "format": "\"R$ \"#,##0.00"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Order Items"
+                    }
+                  },
+                  "Property": "Items Sold"
+                }
+              },
+              "queryRef": "dw fact_order_item.Items Sold",
+              "nativeQueryRef": "Items Sold"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Order Items"
+                    }
+                  },
+                  "Property": "Fulfillments"
+                }
+              },
+              "queryRef": "dw fact_order.Fulfillments",
+              "nativeQueryRef": "Fulfillments"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Order Items"
+                    }
+                  },
+                  "Property": "Avg Fulfillment Value"
+                }
+              },
+              "queryRef": "dw fact_order.Avg Fulfillment Value",
+              "nativeQueryRef": "Avg Fulfillment Value",
+              "format": "\"R$ \"#,##0.00"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Order Items"
+                  }
+                },
+                "Property": "Product Sales"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "dw fact_order_item.Product Sales"
+          }
+        },
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "layout": [
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'middle'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

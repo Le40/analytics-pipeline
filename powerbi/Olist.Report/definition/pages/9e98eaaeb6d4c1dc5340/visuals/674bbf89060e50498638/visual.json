@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "674bbf89060e50498638",
+  "position": {
+    "x": 640,
+    "y": 272,
+    "z": 7000,
+    "height": 336,
+    "width": 816,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Orders"
+                    }
+                  },
+                  "Property": "Delivery Outcome"
+                }
+              },
+              "queryRef": "dw fact_order.Delivery Outcome",
+              "nativeQueryRef": "Delivery Outcome",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reviews"
+                    }
+                  },
+                  "Property": "Negative Review % by Delivery"
+                }
+              },
+              "queryRef": "dw fact_review.Negative Review % by Delivery",
+              "nativeQueryRef": "Negative Review % by Delivery"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Reviews"
+                  }
+                },
+                "Property": "Negative Review % by Delivery"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Negative Review % by Delivery Outcome'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "dfd92dbb8e085d3280b0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "Delivery Outcome"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "08b53518005121648c44",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reviews"
+              }
+            },
+            "Property": "Negative Review % by Delivery"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

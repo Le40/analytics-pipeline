@@ -1,0 +1,234 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "49843ea99d1977c351d0",
+  "position": {
+    "x": 16,
+    "y": 128,
+    "z": 1000,
+    "height": 112,
+    "width": 1440,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Order Items"
+                    }
+                  },
+                  "Property": "Fulfillments"
+                }
+              },
+              "queryRef": "dw fact_order_item.Fulfillments",
+              "nativeQueryRef": "Fulfillments"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Orders"
+                    }
+                  },
+                  "Property": "Avg Est. Delivery Days"
+                }
+              },
+              "queryRef": "dw fact_order.Avg Est. Delivery Days",
+              "nativeQueryRef": "Avg Est. Delivery Days",
+              "format": "~0.0 Days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Orders"
+                    }
+                  },
+                  "Property": "Avg Delivery Days"
+                }
+              },
+              "queryRef": "dw fact_order.Avg Delivery Days",
+              "nativeQueryRef": "Avg Delivery Days",
+              "format": "0.0 Days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Orders"
+                    }
+                  },
+                  "Property": "Avg Carrier Delivery Days"
+                }
+              },
+              "queryRef": "dw fact_order.Avg Carrier Delivery Days",
+              "nativeQueryRef": "Avg Carrier Delivery Days",
+              "format": "0.0 Days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Orders"
+                    }
+                  },
+                  "Property": "Avg Shipping Days"
+                }
+              },
+              "queryRef": "dw fact_order.Avg Shipping Days",
+              "nativeQueryRef": "Avg Shipping Days",
+              "format": "0.0 Days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Orders"
+                    }
+                  },
+                  "Property": "Late Delivery Rate"
+                }
+              },
+              "queryRef": "dw fact_order.Late Delivery Rate",
+              "nativeQueryRef": "Late Delivery Rate",
+              "format": "0.00 %;-0.00 %;0.00 %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Order Items"
+                  }
+                },
+                "Property": "Fulfillments"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "cd3856a0ed523c1302cc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Order Items"
+              }
+            },
+            "Property": "Fulfillments"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "00467deb7a7104b0240e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "Avg Est. Delivery Days"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "01bbf5ac0224a3a1e78c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "Avg Delivery Days"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "acbf493bbc7dc387ea9a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "Avg Carrier Delivery Days"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c6dca2eb0d8ec65459c0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "Avg Shipping Days"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "845c1d8b8c444010e109",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Orders"
+              }
+            },
+            "Property": "Late Delivery Rate"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

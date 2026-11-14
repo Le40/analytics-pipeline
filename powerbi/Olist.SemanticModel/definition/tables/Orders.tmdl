@@ -1,0 +1,310 @@
+table Orders
+	lineageTag: bf0a7862-c67e-4a3d-9a09-0039bb2c0238
+
+	measure 'Avg Delivery Days' = AVERAGE('Orders'[Delivery Days])
+		formatString: " 0.0 ""Days"""
+		displayFolder: KPIs
+		lineageTag: 20cf643e-ca44-4646-b4aa-141f1e09d3d3
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Avg Shipping Days' = AVERAGE('Orders'[Shipping Days])
+		formatString: " 0.0 ""Days"""
+		displayFolder: KPIs
+		lineageTag: 8b9f7f90-545c-4c7e-a027-0971bb9eb703
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Avg Carrier Delivery Days' = AVERAGE('Orders'[Carrier Delivery])
+		formatString: " 0.0 ""Days"""
+		displayFolder: KPIs
+		lineageTag: 4775503c-61f7-4bc7-b476-ba1f3d08a91f
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Late Delivery Rate' = AVERAGE('Orders'[Late Delivery])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: KPIs
+		lineageTag: 19ebc7b9-7f8c-4e39-b322-184ef212e0d5
+
+	measure 'Avg Est. Delivery Days' = AVERAGE('Orders'[Est. Delivery Days])
+		formatString: " 0.0 ""Days"""
+		displayFolder: KPIs
+		lineageTag: 95f76ff9-a562-4512-b06e-9b9e4bb9d922
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column order_id
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 04809d03-00af-481b-823b-7da185c1e080
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: d0efb176-5969-487a-8aa4-b090b4ec1d9c
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 8967662f-a797-4ec0-a8ef-2c5017d0fa56
+		summarizeBy: none
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 10a8b409-494d-4d4f-8cff-5225f99d839d
+		summarizeBy: none
+		sourceColumn: purchase_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 5465b79f-80ff-4612-8749-e483e64f5b01
+		summarizeBy: none
+		sourceColumn: delivery_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 210cb8e4-3475-48f8-b5d2-eeaa66c67283
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_timestamp
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: 6fc3a6d6-4e8f-45dc-a535-f4bd5ad420f1
+		summarizeBy: none
+		sourceColumn: purchase_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column approved_timestamp
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: 353dc683-34a2-440b-a198-7e91d33eb3a5
+		summarizeBy: none
+		sourceColumn: approved_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_delivery_timestamp
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: 0adcac94-ace1-4ff4-b57b-133346727fc8
+		summarizeBy: none
+		sourceColumn: carrier_delivery_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_delivery_timestamp
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: 4ad29dc1-1948-42c0-a6b9-b2d4dbf90dcc
+		summarizeBy: none
+		sourceColumn: customer_delivery_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column estimated_delivery_timestamp
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: a9c9aa57-fbba-46c7-9d72-4598b7d17d47
+		summarizeBy: none
+		sourceColumn: estimated_delivery_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Delivery Days' =
+			
+			IF(
+			    NOT ISBLANK('Orders'[delivery_date_key]),
+			    DATEDIFF(
+			        'Orders'[purchase_timestamp],
+			        'Orders'[customer_delivery_timestamp],
+			        MINUTE
+			    ) / 1440
+			)
+		dataType: decimal
+		formatString: " 0.0 ""Days"""
+		displayFolder: Delivery
+		lineageTag: b479c463-97a7-4a7f-9cb1-dfb1a4a2091e
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Shipping Days' =
+			
+			IF(
+			    NOT ISBLANK('Orders'[delivery_date_key]),
+			    DATEDIFF(
+			        'Orders'[carrier_delivery_timestamp],
+			        'Orders'[customer_delivery_timestamp],
+			        MINUTE
+			    ) / 1440
+			)
+		dataType: decimal
+		formatString: " 0.0 ""Days"""
+		displayFolder: Delivery
+		lineageTag: 04697bd6-529e-4099-be68-7c302db0a4ce
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Carrier Delivery' =
+			
+			IF(
+			    NOT ISBLANK('Orders'[delivery_date_key]),
+			    DATEDIFF(
+			        'Orders'[purchase_timestamp],
+			        'Orders'[carrier_delivery_timestamp],
+			        MINUTE
+			    ) / 1440
+			)
+		dataType: decimal
+		formatString: " 0.0 ""Days"""
+		displayFolder: Delivery
+		lineageTag: 908de52e-3bac-435a-ad80-ed6dee2bc924
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Delivery Bucket' =
+			
+			VAR Days = 'Orders'[Delivery Days]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(Days), BLANK(),
+			    Days < 4, "0–3 days",
+			    Days < 8, "4–7 days",
+			    Days < 15, "8–14 days",
+			    Days < 31, "15–30 days",
+			    "31+ days"
+			)
+		displayFolder: Delivery
+		lineageTag: 6353b571-942c-43df-a1ca-e817ecbc1f0e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Late Delivery' =
+			
+			VAR Actual = 'Orders'[customer_delivery_timestamp]
+			VAR Estimated = 'Orders'[estimated_delivery_timestamp]
+			RETURN
+			IF(
+			    'Orders'[status] <> "delivered" ||
+			    ISBLANK(Actual) || ISBLANK(Estimated),
+			    BLANK(),
+			    IF(INT(Actual) > INT(Estimated), 1, 0)
+			)
+		isHidden
+		formatString: 0
+		displayFolder: Delivery
+		lineageTag: 6362f8fd-c0d0-4f58-9194-3daa287366e4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'Est. Delivery Days' =
+			
+			IF(
+			    NOT ISBLANK('Orders'[estimated_delivery_timestamp]),
+			    DATEDIFF(
+			        'Orders'[purchase_timestamp],
+			        'Orders'[estimated_delivery_timestamp],
+			        MINUTE
+			    ) / 1440
+			)
+		dataType: decimal
+		formatString: "  0.0 ""Days"""
+		displayFolder: Delivery
+		lineageTag: 34f5fe1c-9dd4-414c-a1bf-22564331b991
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Delivery Outcome' =
+			
+			VAR AsOfDate = DATE(2018, 09, 01)
+			VAR OrderStatus = 'Orders'[status]
+			VAR LateDelivery = 'Orders'[Late Delivery]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    OrderStatus = "canceled", "Cancelled",
+			    OrderStatus = "unavailable", "Unavailable",
+			    OrderStatus = "delivered" && LateDelivery = 1, "Late",
+			    OrderStatus = "delivered" && LateDelivery = 0, "On Time",
+			    OrderStatus = "delivered", "Missing Delivery Date",
+			    ISBLANK('Orders'[estimated_delivery_timestamp]), "Unknown",
+			    INT('Orders'[estimated_delivery_timestamp]) < AsOfDate, "Overdue",
+			    "Pending"
+			)
+		displayFolder: Delivery
+		lineageTag: d96c1d08-2176-4caf-b0db-e07e51e2f657
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Orders = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "fact_order"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,33 @@
+table Customer
+	lineageTag: bb443068-ceaf-4186-b8bf-5bb88dfd9afe
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ab3e6ddd-ffa8-4609-9205-22e12275a929
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: b8708355-7b5b-430e-8e91-bd9e1765ef53
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customer = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "dim_customer"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

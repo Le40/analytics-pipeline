@@ -1,0 +1,108 @@
+table Payments
+	lineageTag: 854515b9-01c9-419e-be4e-ec9968455f3c
+
+	measure 'Payment Value' = SUM('Payments'[payment_value])
+		formatString: "R$" #,##0.00
+		lineageTag: 96c49c87-7d87-46c7-8bf6-0f1b6f38798b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_id
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 9c2b431d-62bb-456d-b199-1e2a830d1c8a
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_sequential
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: c1562b27-38c0-480f-a879-3f27326b47b4
+		summarizeBy: none
+		sourceColumn: payment_sequential
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 5c9ea9b3-c08e-47d1-bfd4-c1191053291e
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: c347a27d-d1ce-456c-92ef-235f5d8b3762
+		summarizeBy: none
+		sourceColumn: purchase_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_type
+		dataType: string
+		lineageTag: 92cd9d5c-a7d7-40ad-ba6a-257f7880d6e5
+		summarizeBy: none
+		sourceColumn: payment_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column installments
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ceea02e-55d7-4d2f-8812-8f046695df39
+		summarizeBy: none
+		sourceColumn: installments
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_value
+		dataType: decimal
+		isHidden
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		isAvailableInMdx: false
+		lineageTag: 0867bee0-c564-4af6-b5d5-996105941c89
+		summarizeBy: none
+		sourceColumn: payment_value
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column location_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 44b8076e-6bfe-4171-a282-28b91ad2d486
+		summarizeBy: none
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Payments = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "fact_payment"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

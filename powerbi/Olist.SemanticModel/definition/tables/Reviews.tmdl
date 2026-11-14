@@ -1,0 +1,258 @@
+table Reviews
+	lineageTag: 495c67d7-bf48-448c-aef1-fe34d54530c3
+
+	measure 'Positive Review %' = ```
+			
+			divide(
+			    CALCULATE(
+			        count('Reviews'[score]),  
+			        'Reviews'[score] >=4
+			    ) ,
+			    CALCULATE(
+			        [Review Count],
+			        REMOVEFILTERS('Reviews'[score])
+			))
+			```
+		formatString: 0\ %;-0\ %;0\ %
+		displayFolder: KPIs
+		lineageTag: 83738802-0e36-4e7a-8f6b-210c840b5e40
+
+	measure 'Avg Review Score' = AVERAGE('Reviews'[score])
+		formatString: 0.00
+		displayFolder: KPIs
+		lineageTag: 706fa3fa-52d3-47e5-a78e-550976f1ee77
+
+	measure 'Negative Review %' =
+			
+			divide(
+			    [Negative Reviews],
+			    CALCULATE(
+			        [Review Count],
+			        REMOVEFILTERS('Reviews'[score])
+			    )
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		displayFolder: KPIs
+		lineageTag: d28abb7b-bf1f-4c87-8e2b-e2a354fa1cc8
+
+	measure 'Negative Review % by Delivery' = ```
+			
+			VAR OrderIds = VALUES('Orders'[order_id])
+			
+			RETURN 
+			    CALCULATE(
+			        [Negative Review %],
+			        TREATAS(
+			            OrderIds,
+			            'Reviews'[order_id]
+			        )
+			    )
+			```
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: Delivery Analysis
+		lineageTag: aa1e236d-5944-4c03-8b51-02ec2bd79dcc
+
+	measure 'Negative Reviews' =
+			
+			CALCULATE(
+			    COUNT('Reviews'[score]),
+			    'Reviews'[score] <= 2
+			)
+		formatString: 0
+		displayFolder: KPIs
+		lineageTag: a98800a3-6e94-4248-816c-ff993a76c2f2
+
+	measure 'Negative Reviews by Delivery' = ```
+			
+			VAR OrderIds = VALUES('Orders'[order_id])
+			
+			RETURN 
+			    CALCULATE(
+			        [Negative Reviews],
+			        TREATAS(
+			            OrderIds,
+			            'Reviews'[order_id]
+			        )
+			    )
+			```
+		formatString: 0
+		displayFolder: Delivery Analysis
+		lineageTag: b3c15c0d-627c-4648-9473-294add84ec19
+
+	measure 'Review Count' = COUNTROWS('Reviews')
+		formatString: 0
+		displayFolder: KPIs
+		lineageTag: d1d11d0b-4028-4a16-b968-21f9055cc123
+
+	measure 'Reviewed Orders' = DISTINCTCOUNT('Reviews'[order_id])
+		formatString: 0
+		displayFolder: KPIs
+		lineageTag: 317b8f97-61ce-4067-a3e4-4017dc132cb3
+
+	measure 'Avg Delivery Days by Rating' =
+			
+			VAR ReviewedOrders = VALUES('Reviews'[order_id])
+			RETURN
+			    CALCULATE(
+			        [Avg Delivery Days],
+			        TREATAS(ReviewedOrders, 'Orders'[order_id]
+			    )
+			)
+		formatString: " 0.0 ""Days"""
+		displayFolder: Delivery Analysis
+		lineageTag: 5f51eeb2-5354-4344-80ca-3d15cbe304f2
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Late Delivery Rate by Rating' =
+			
+			VAR ReviewedOrders = VALUES('Reviews'[order_id])
+			RETURN
+			    CALCULATE(
+			        [Late Delivery Rate],
+			        TREATAS(ReviewedOrders, 'Orders'[order_id]
+			    )
+			)
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		displayFolder: Delivery Analysis
+		lineageTag: 1ac47aab-85c0-466c-9223-73db901811c5
+
+	measure 'Review Coverage %' =
+			
+			VAR AllOrders = VALUES('Orders'[order_id])
+			RETURN
+			    DIVIDE(
+			        CALCULATE(
+			            [Reviewed Orders],
+			            REMOVEFILTERS('Date'),
+			            REMOVEFILTERS('Reviews'[score]),
+			            TREATAS(AllOrders, 'Reviews'[order_id])
+			        ),
+			        DISTINCTCOUNT('Orders'[order_id])
+			    )
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		displayFolder: KPIs
+		lineageTag: f33d43ce-1b1c-498d-9c8a-64449c94f3a5
+
+	column review_id
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: b54a58f3-4ac1-4461-bc3f-f469588ba6db
+		summarizeBy: none
+		sourceColumn: review_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: cc96aabd-ba2b-45f4-9f28-b55b71ac9e44
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: a9be0df2-c2f0-4529-a52d-db9820bf903f
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column send_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: ea79f67d-d000-4455-a607-8e71d3284152
+		summarizeBy: none
+		sourceColumn: send_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column answer_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 77628b72-0ce4-4a3a-9a23-70d104f3d281
+		summarizeBy: none
+		sourceColumn: answer_date_key
+
+		annotation SummarizationSetBy = User
+
+	column score
+		dataType: int64
+		formatString: 0
+		lineageTag: b5b72fe2-a4b8-414e-b90a-16314dc9ef08
+		summarizeBy: none
+		sourceColumn: score
+
+		annotation SummarizationSetBy = User
+
+	column comment_title
+		dataType: string
+		lineageTag: 118a04d6-3e8a-454e-8221-bd461baac1e9
+		summarizeBy: none
+		sourceColumn: comment_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column comment_message
+		dataType: string
+		lineageTag: d4b97068-cc53-4f43-80e1-1138f232fbf8
+		summarizeBy: none
+		sourceColumn: comment_message
+
+		annotation SummarizationSetBy = Automatic
+
+	column creation_date
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: e5bf22e1-10e3-4680-a063-870925ba95cf
+		summarizeBy: none
+		sourceColumn: creation_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column answer_timestamp
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: d8dd55fc-8464-4727-8441-c1f0d1020b31
+		summarizeBy: none
+		sourceColumn: answer_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 21a8b06b-41cf-42c3-ab6f-bc3a70cfbd40
+		summarizeBy: none
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Reviews = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "fact_review"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

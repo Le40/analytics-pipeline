@@ -1,0 +1,47 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: sk-SK
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Customer","Date","Location","Product","Seller","Orders","Order Items","Payments","Reviews"]
+
+annotation PBI_RemovedChildren = [{"remoteItemId":{"foreignKeyRelationship":{"fromTableLocalLineageTag":"86f59b22-b5b7-440a-a6f1-88bdd9dc8d21","fromColumnLocalLineageTag":"8a770ccd-28d6-4b1d-bc04-ed7e76b203cc","toTableLocalLineageTag":"bf0a7862-c67e-4a3d-9a09-0039bb2c0238","toColumnLocalLineageTag":"04809d03-00af-481b-823b-7da185c1e080"}},"objectType":"Relationship"},{"remoteItemId":{"foreignKeyRelationship":{"fromTableLocalLineageTag":"854515b9-01c9-419e-be4e-ec9968455f3c","fromColumnLocalLineageTag":"9c2b431d-62bb-456d-b199-1e2a830d1c8a","toTableLocalLineageTag":"bf0a7862-c67e-4a3d-9a09-0039bb2c0238","toColumnLocalLineageTag":"04809d03-00af-481b-823b-7da185c1e080"}},"objectType":"Relationship"},{"remoteItemId":{"foreignKeyRelationship":{"fromTableLocalLineageTag":"495c67d7-bf48-448c-aef1-fe34d54530c3","fromColumnLocalLineageTag":"77628b72-0ce4-4a3a-9a23-70d104f3d281","toTableLocalLineageTag":"17f537f1-24e9-484b-af63-fc5eb14e4723","toColumnLocalLineageTag":"ba487465-1115-418a-a8ae-abc9874e09bf"}},"objectType":"Relationship"},{"remoteItemId":{"foreignKeyRelationship":{"fromTableLocalLineageTag":"495c67d7-bf48-448c-aef1-fe34d54530c3","fromColumnLocalLineageTag":"cc96aabd-ba2b-45f4-9f28-b55b71ac9e44","toTableLocalLineageTag":"bf0a7862-c67e-4a3d-9a09-0039bb2c0238","toColumnLocalLineageTag":"04809d03-00af-481b-823b-7da185c1e080"}},"objectType":"Relationship"}]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation __TEdtr = 1
+
+annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMN_NAMES","PERF_UNUSED_COLUMNS","UPPERCASE_FIRST_LETTER_COLUMNS_HIERARCHIES"]}
+
+annotation BestPracticeAnalyzer =
+		[
+		  {
+		    "ID": "ID_COLUMNS_MUST_NOT_BE_SUMMARIZED",
+		    "Name": "ID columns must not be summarized",
+		    "Severity": 1,
+		    "Scope": "DataColumn",
+		    "Expression": "(Name.EndsWith(\"_id\") or Name.EndsWith(\"_key\"))\nand SummarizeBy <> \"None\"",
+		    "CompatibilityLevel": 1200
+		  }
+		]
+
+annotation BestPracticeAnalyzer_ExternalRuleFiles = ["https://raw.githubusercontent.com/TabularEditor/BestPracticeRules/master/BPARules-standard.json"]
+
+ref table Customer
+ref table Date
+ref table Location
+ref table Product
+ref table Seller
+ref table Orders
+ref table 'Order Items'
+ref table Payments
+ref table Reviews
+
+ref role SouthEast
+

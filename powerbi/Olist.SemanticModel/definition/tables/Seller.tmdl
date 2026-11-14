@@ -1,0 +1,57 @@
+table Seller
+	lineageTag: f208b810-d5d9-4e09-8fdf-ffeee514f4fc
+
+	column seller_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 63e29f60-cae1-4de5-bdee-584476373dd6
+		summarizeBy: none
+		sourceColumn: seller_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: c8fff50e-d60f-4ec4-a25c-1452ea59bb8a
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column zip_code_prefix
+		dataType: string
+		lineageTag: a2d19a76-2634-4ced-8c76-5cb769681430
+		summarizeBy: none
+		sourceColumn: zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 6220cc15-67bd-42f2-8ea1-390a2a9a9c35
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: fcc250ec-0cf2-4153-bdf4-ccf08e5990e7
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Seller = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "dim_seller"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

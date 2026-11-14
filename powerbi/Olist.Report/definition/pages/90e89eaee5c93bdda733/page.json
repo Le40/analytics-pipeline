@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "90e89eaee5c93bdda733",
+  "displayName": "Shipping&Delivery",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "pageBinding": {
+    "name": "1506eb871e16921d0440",
+    "type": "Default",
+    "parameters": []
+  },
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "187L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "9fa9e9c340a741c73985",
+      "target": "838d2796dd9eeeda602b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "838d2796dd9eeeda602b",
+      "target": "9fa9e9c340a741c73985",
+      "type": "NoFilter"
+    }
+  ]
+}

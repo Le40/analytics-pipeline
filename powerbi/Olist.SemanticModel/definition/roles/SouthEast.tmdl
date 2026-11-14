@@ -1,0 +1,7 @@
+role SouthEast
+	modelPermission: read
+
+	tablePermission Location = 'Location'[state] IN {"SP", "RJ", "MG", "ES"}
+
+	annotation PBI_Id = 2ecc4618040e4887bc9dca8a75dfcc68
+

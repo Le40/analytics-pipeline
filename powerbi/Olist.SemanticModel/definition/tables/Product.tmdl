@@ -1,0 +1,95 @@
+table Product
+	lineageTag: 279ac4ba-f089-449e-939a-f57809a7a2e7
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 441d7990-adf7-44c3-ac78-5387933ba2ef
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: 50cc7733-c85a-4694-9a65-6d3bd939cdd9
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_name
+		dataType: string
+		lineageTag: 514fb6a8-7831-4a9c-9762-26aeca210a41
+		summarizeBy: none
+		sourceColumn: category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_name_english
+		dataType: string
+		lineageTag: 456ba21f-edb3-4d70-b70b-dd4dda5ead73
+		summarizeBy: none
+		sourceColumn: category_name_english
+
+		annotation SummarizationSetBy = Automatic
+
+	column weight_g
+		dataType: decimal
+		formatString: 0.0
+		lineageTag: 373e3fb7-3f22-422f-b20a-ea566bab60d2
+		summarizeBy: none
+		sourceColumn: weight_g
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column length_cm
+		dataType: decimal
+		formatString: 0
+		lineageTag: 1abc90c1-a0a5-4ff8-9abc-a967764d3426
+		summarizeBy: none
+		sourceColumn: length_cm
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column height_cm
+		dataType: decimal
+		formatString: 0.00
+		lineageTag: 1d073212-3cbf-401b-a5cb-518087f4e5bb
+		summarizeBy: none
+		sourceColumn: height_cm
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column width_cm
+		dataType: decimal
+		formatString: 0.0
+		lineageTag: e65bee5a-021b-43af-b23d-10f4431db93c
+		summarizeBy: none
+		sourceColumn: width_cm
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Product = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "dim_product"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

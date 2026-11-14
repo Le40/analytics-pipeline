@@ -1,0 +1,83 @@
+relationship 2adacfc5-6ab4-4799-9706-7a864d9a8758
+	fromColumn: Orders.customer_key
+	toColumn: Customer.customer_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship a56e9bc5-bf6a-40a6-b2dc-f97bf36aaa2e
+	fromColumn: Orders.purchase_date_key
+	toColumn: Date.date_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship cafac523-23ed-4f13-849e-231e2c8099a3
+	fromColumn: Orders.location_key
+	toColumn: Location.location_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 1c8c1005-07cf-4015-97e9-5a9f18f40f29
+	fromColumn: 'Order Items'.purchase_date_key
+	toColumn: Date.date_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 224d19a6-d874-4b39-86fa-48fd9ab642c9
+	fromColumn: 'Order Items'.product_key
+	toColumn: Product.product_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship a7fdf03b-9a16-4d02-935b-c47fab19df00
+	fromColumn: 'Order Items'.seller_key
+	toColumn: Seller.seller_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship f560e843-f081-403b-8f0b-2a0da8a82dd4
+	fromColumn: Payments.customer_key
+	toColumn: Customer.customer_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 6c47d8a6-efb4-4755-b70d-d38285a1f477
+	fromColumn: Payments.purchase_date_key
+	toColumn: Date.date_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship ef9532ba-24c5-4d7d-8ac6-cbc4e2cbc75d
+	fromColumn: Reviews.customer_key
+	toColumn: Customer.customer_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 89403dbf-16c9-412c-9458-f6a0a6fdcf5f
+	fromColumn: Reviews.send_date_key
+	toColumn: Date.date_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 6ff0c5ea-d579-4f4b-2bd0-95db028771be
+	fromColumn: 'Order Items'.location_key
+	toColumn: Location.location_key
+
+relationship f5bf8c18-f4c8-3496-a3a6-d6475db04fdc
+	fromColumn: Reviews.location_key
+	toColumn: Location.location_key
+
+relationship 61d83c3c-7b08-3d65-b3bb-d88f14e3fc4e
+	fromColumn: 'Order Items'.customer_key
+	toColumn: Customer.customer_key
+
+relationship 0099777c-e766-e838-d6bc-7f7a96eea72e
+	fromColumn: Payments.location_key
+	toColumn: Location.location_key
+
+relationship f0509c43-5c6c-e429-6215-ef9c4d9dc9ba
+	isActive: false
+	fromColumn: Orders.delivery_date_key
+	toColumn: Date.date_key
+
+	annotation PBI_IsFromSource = FS
+

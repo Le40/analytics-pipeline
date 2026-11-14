@@ -1,0 +1,220 @@
+table 'Order Items'
+	lineageTag: 86f59b22-b5b7-440a-a6f1-88bdd9dc8d21
+
+	measure 'Product Sales' = SUM('Order Items'[price])
+		formatString: "R$" #,##0.00
+		displayFolder: KPIs
+		lineageTag: 2506fad0-5101-4de2-9b15-712aab3e1775
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Items Sold' = COUNTROWS('Order Items')
+		formatString: 0
+		displayFolder: KPIs
+		lineageTag: f2113edd-1f17-4e23-ac24-e08a2358789e
+
+	measure 'Freight Value' = SUM('Order Items'[freight_value])
+		formatString: "R$" #,##0.00
+		displayFolder: KPIs
+		lineageTag: ee65c200-2fd9-4cb4-8b00-93c13b7009aa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Fulfillments = DISTINCTCOUNT('Order Items'[order_id])
+		formatString: 0
+		displayFolder: KPIs
+		lineageTag: e2dc29b9-6a86-4caa-a3ba-c1b48977345a
+
+	measure Revenue = [Product Sales] + [Freight Value]
+		formatString: "R$" #,##0.00
+		displayFolder: KPIs
+		lineageTag: 926525a5-2c0e-42b3-bd0e-f612652ea998
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Fulfillment Value' = DIVIDE([Product Sales], [Fulfillments])
+		formatString: "R$" #,##0.00
+		displayFolder: KPIs
+		lineageTag: 4ede2136-3ae5-4f52-9cca-631f7bcd7068
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Product Sales MoM%' =
+			
+			VAR PreviousMonthSales =
+			    CALCULATE(
+			        [Product Sales],
+			        DATEADD('Date'[full_date], -1, MONTH)
+			    )
+			RETURN
+			    DIVIDE(
+			        [Product Sales] - PreviousMonthSales,
+			        PreviousMonthSales
+			    )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: KPIs
+		lineageTag: 1a19d434-1c9c-4988-b0f1-809ba521c59d
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "MonthOverMonth"
+				}
+
+		changedProperty = FormatString
+
+	measure 'Product Sales PY' =
+			
+			CALCULATE(
+			    [Product Sales],
+			    SAMEPERIODLASTYEAR('Date'[full_date])
+			)
+		formatString: "R$" #,##0.00
+		displayFolder: KPIs
+		lineageTag: 73710869-25bb-428b-949b-bb151a2a8277
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Product Sales YoY Change' =
+			
+			IF(
+			    ISBLANK([Product Sales PY]),
+			    BLANK(),
+			    [Product Sales] - [Product Sales PY]
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: KPIs
+		lineageTag: 5460e213-1e06-428d-b58d-19371e3b526b
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Product Sales YoY %' = DIVIDE([Product Sales] - [Product Sales PY], [Product Sales PY])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: KPIs
+		lineageTag: 63b51dae-3256-4fb5-8573-f1ce8dbd7cb9
+
+	column order_id
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 8a770ccd-28d6-4b1d-bc04-ed7e76b203cc
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = User
+
+	column order_item_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: d4bf3f27-86d4-4f72-9093-37b6a9aa49f8
+		summarizeBy: none
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: f390613e-92e6-4c18-9433-9bdc8501bb17
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 08aa6472-5ab7-4cfd-b55b-74df9e4df073
+		summarizeBy: none
+		sourceColumn: seller_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 8197d9d1-1a8d-4fc9-880e-894554016e7a
+		summarizeBy: none
+		sourceColumn: purchase_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_limit_timestamp
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Dates
+		lineageTag: dc2f4fe3-a024-4b4c-ac13-33756888b44a
+		summarizeBy: none
+		sourceColumn: shipping_limit_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: decimal
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: b51bbd13-d7b3-40d6-b808-6bfb5c917384
+		summarizeBy: none
+		sourceColumn: price
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column freight_value
+		dataType: decimal
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: c40e0247-7ac5-49a6-bcce-cb98c90a55ed
+		summarizeBy: none
+		sourceColumn: freight_value
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: d70f0350-593f-4f13-bc2a-30ebfb29b897
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = User
+
+	column location_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		isAvailableInMdx: false
+		lineageTag: 8eb7cc5f-de76-4ce8-a372-b13b3738b5a4
+		summarizeBy: none
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = User
+
+	partition 'Order Items' = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("(localdb)\MSSQLLocalDB", "EcommerceAnalytics"),
+				  #"Navigation 1" = Source{[Schema = "dw", Item = "fact_order_item"]}[Data]
+				in
+				  #"Navigation 1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

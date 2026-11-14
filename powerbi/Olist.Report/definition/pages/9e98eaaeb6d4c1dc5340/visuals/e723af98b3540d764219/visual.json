@@ -1,0 +1,229 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "e723af98b3540d764219",
+  "position": {
+    "x": 16,
+    "y": 128,
+    "z": 0,
+    "height": 111.99999999999999,
+    "width": 1440,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reviews"
+                    }
+                  },
+                  "Property": "Review Coverage %"
+                }
+              },
+              "queryRef": "dw fact_review.Review Coverage %",
+              "nativeQueryRef": "Review Coverage %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reviews"
+                    }
+                  },
+                  "Property": "Avg Delivery Days by Rating"
+                }
+              },
+              "queryRef": "dw fact_review.Avg Delivery Days by Rating",
+              "nativeQueryRef": "Avg Delivery Days by Rating"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reviews"
+                    }
+                  },
+                  "Property": "Late Delivery Rate by Rating"
+                }
+              },
+              "queryRef": "dw fact_review.Late Delivery Rate by Rating",
+              "nativeQueryRef": "Late Delivery Rate by Rating"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reviews"
+                    }
+                  },
+                  "Property": "Reviewed Orders"
+                }
+              },
+              "queryRef": "dw fact_review.Reviewed Orders",
+              "nativeQueryRef": "Reviewed Orders"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reviews"
+                    }
+                  },
+                  "Property": "Positive Review %"
+                }
+              },
+              "queryRef": "dw fact_review.Positive Review %",
+              "nativeQueryRef": "Positive Review %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reviews"
+                    }
+                  },
+                  "Property": "Negative Review %"
+                }
+              },
+              "queryRef": "dw fact_review.Negative Review %",
+              "nativeQueryRef": "Negative Review %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Reviews"
+                  }
+                },
+                "Property": "Review Coverage %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "b1a132410b4a3aa1807c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reviews"
+              }
+            },
+            "Property": "Reviewed Orders"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4e5458f328c214d22194",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reviews"
+              }
+            },
+            "Property": "Negative Review %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bb499b835a9eb65d83b8",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reviews"
+              }
+            },
+            "Property": "Positive Review %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "147fb5bcca4977a0db44",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reviews"
+              }
+            },
+            "Property": "Review Coverage %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c1b798e1349ded707890",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reviews"
+              }
+            },
+            "Property": "Avg Delivery Days by Rating"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b31055f473a83521b547",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reviews"
+              }
+            },
+            "Property": "Late Delivery Rate by Rating"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
