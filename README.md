@@ -1,4 +1,4 @@
-# E-Commerce Analytics Pipeline
+# Olist E-Commerce Analytics
 
 A portfolio data engineering and analytics project built with **Python, pandas, SQL Server, and Power BI** using the [Olist Brazilian E-Commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
 
