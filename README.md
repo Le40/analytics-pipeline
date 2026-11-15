@@ -2,7 +2,7 @@
 
 A portfolio data engineering and analytics project built with **Python, pandas, SQL Server, and Power BI** using the [Olist Brazilian E-Commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
 
-**Current status:** The batch ingestion, SQL Server data warehouse, automated loading, and data-quality reconciliation phases are implemented. SQL analysis and the Power BI dashboard are planned next.
+**Current status:** The Python ingestion pipeline, SQL Server dimensional warehouse, automated loading, data validation, and reconciliation are implemented. The project also includes SQL business analysis and a Power BI dashboard.
 
 ## Architecture
 
@@ -23,8 +23,14 @@ SQL Server dimensional warehouse (dw)
   - SQL dimension and fact loaders
   - reconciliation before commit
         |
-        v
-SQL analytics -> Power BI (planned)
+        +----> SQL business analysis
+        |        - seller handover performance
+        |        - delivery delays
+        |
+        +----> Power BI
+                 - Sales Overview
+                 - Shipping & Delivery
+                 - Customer Satisfaction
 ```
 
 Run the batch pipeline with a single command (`python main.py`). Staging ingestion runs first; warehouse SQL scripts then execute within a shared database transaction. Warehouse changes are **committed only if reconciliation passes**, and rolled back on failure.
@@ -35,7 +41,7 @@ Run the batch pipeline with a single command (`python main.py`). Staging ingesti
 - **SQL Server / T-SQL:** staging tables, dimensional model, loading scripts, and reconciliation
 - **pyodbc:** Python–SQL Server connection and data loading
 - **pytest:** local integration tests for repeated loading and transaction rollback
-- **Power BI:** planned reporting and visualization layer
+- **Power BI:** Dimensional data model, DAX measures, interactive reports, and row-level security (RLS)
 
 ## Dimensional model
 
@@ -69,7 +75,11 @@ src/
   warehouse/
     warehouse_pipeline.py   # Execute SQL, reconcile, commit / roll back
     reconciliation/         # Key, financial, date and translation checks
-sql/                        # Data warehouse loading scripts
+sql/ 
+  loads/                    # Data warehouse loading scripts
+  analysis/                 # SQL business analysis and findings
+powerbi/                    # Power BI project, documentation and screenshots
+docs/                       # Additional project documentation
 database/                   # SQL Server database project / schema definitions
 tests/                      # Integration tests
 ```
@@ -88,6 +98,28 @@ The project loads the Olist orders, customers, order items, payments, reviews, p
 ### Current scope and limitations
 
 This is a **batch pipeline** using a static source dataset. Staging uses a full reload, while warehouse loaders insert records that do not already exist. Updates or deletions of existing warehouse rows are **not** handled incrementally. The idempotency test compares table row counts; it is not a full row-by-row comparison. GitHub Actions CI is not configured because the integration tests currently depend on a local SQL Server database.
+
+## Analytics and Reporting
+
+The project includes two analytical outputs:
+
+**SQL analysis**
+
+SQL queries investigate seller handover performance, delivery delays, and other findings from the dataset. The seller analysis compares shipping deadline compliance across sellers and examines its relationship with late deliveries.
+
+See [SQL Analysis](sql/analysis/README.md) for the queries, findings, and recommendations.
+
+**Power BI dashboard**
+
+The dashboard contains three report pages:
+
+- **Sales Overview:** Revenue, orders, products, and sales performance.
+- **Shipping & Delivery:** Delivery times, late deliveries, and shipping performance.
+- **Customer Satisfaction:** Review scores and relationships between delivery performance and customer reviews.
+
+The report uses a dimensional model with DAX measures and includes a sample regional row-level security role.
+
+See [Power BI Report](powerbi/README.md) for details and screenshots.
 
 ## Running locally
 
@@ -122,13 +154,3 @@ python -m pytest -v
 
 **Note:** These are real database integration tests, not isolated unit tests. Run them only against a local/development database configured for testing.
 
-## Project roadmap
-
-- [x] Explore and profile Olist source data
-- [x] Implement Python CSV ingestion and staging
-- [x] Build SQL Server dimensional warehouse
-- [x] Automate warehouse loading and reconciliation
-- [x] Add local idempotency and rollback integration tests
-- [x] Document the data engineering phase
-- [ ] Develop analytical SQL queries and business metrics
-- [ ] Build a Power BI dashboard

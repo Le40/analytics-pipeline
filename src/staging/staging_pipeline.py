@@ -1,8 +1,15 @@
 from time import perf_counter
+
 from src.staging import ingestion
 from src.staging.configs import (
-    category_translation, customers, order_items, orders, 
-    payments, products, sellers, reviews
+    category_translation,
+    customers,
+    order_items,
+    orders,
+    payments,
+    products,
+    reviews,
+    sellers,
 )
 
 STAGING_CONFIGS = [
@@ -13,8 +20,9 @@ STAGING_CONFIGS = [
     order_items.STAGING_CONFIG,
     payments.STAGING_CONFIG,
     reviews.STAGING_CONFIG,
-    category_translation.STAGING_CONFIG
+    category_translation.STAGING_CONFIG,
 ]
+
 
 def load_staging() -> None:
     """Load all configured CSV sources into staging."""

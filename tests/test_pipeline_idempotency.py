@@ -1,4 +1,5 @@
 import pyodbc
+
 from src.config import CONNECTION_STRING
 from src.warehouse import warehouse_pipeline
 

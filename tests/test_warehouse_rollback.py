@@ -1,5 +1,5 @@
-import pytest
 import pyodbc
+import pytest
 
 from src.config import CONNECTION_STRING
 from src.warehouse import warehouse_pipeline
@@ -10,9 +10,7 @@ def table_exists() -> bool:
 
     try:
         cursor = connection.cursor()
-        cursor.execute(
-            "SELECT OBJECT_ID('dbo._rollback_test', 'U')"
-        )
+        cursor.execute("SELECT OBJECT_ID('dbo._rollback_test', 'U')")
         return cursor.fetchone()[0] is not None
     finally:
         connection.close()
@@ -27,11 +25,7 @@ def test_warehouse_rollback(monkeypatch):
         cursor.execute("CREATE TABLE dbo._rollback_test (id INT)")
         raise RuntimeError("Simulated failure")
 
-    monkeypatch.setattr(
-        warehouse_pipeline,
-        "execute_load_scripts",
-        failing_loader
-    )
+    monkeypatch.setattr(warehouse_pipeline, "execute_load_scripts", failing_loader)
 
     # The warehouse pipeline must propagate the error
     with pytest.raises(RuntimeError, match="Simulated failure"):

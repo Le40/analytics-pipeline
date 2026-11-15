@@ -2,7 +2,7 @@
 
 ## Objective
 
-Investigate what is the role or sellers in late deliveries.
+Investigate the role of sellers in late deliveries.
 
 ## Methodology
 

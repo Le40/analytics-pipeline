@@ -15,9 +15,9 @@ INSERT INTO dw.fact_order_item(
         oi.order_item_id,
         dp.product_key,
         ds.seller_key,
-        fo.location_key,
         fo.customer_key,
-        fo.date_key AS purchase_date_key,
+        fo.location_key,
+        fo.purchase_date_key,
         oi.shipping_limit_date,
         oi.price,
         oi.freight_value

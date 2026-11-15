@@ -2,6 +2,7 @@ INSERT INTO dw.fact_payment(
     order_id,
     payment_sequential,
     customer_key,
+    location_key,
     purchase_date_key,
     payment_type,
     installments,
@@ -12,7 +13,7 @@ INSERT INTO dw.fact_payment(
         p.payment_sequential,
         fo.customer_key,
         fo.location_key,
-        fo.date_key AS purchase_date_key,
+        fo.purchase_date_key,
         p.payment_type,
         p.payment_installments,
         p.payment_value

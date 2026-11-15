@@ -1,4 +1,5 @@
 import pandas as pd
+
 from src.config import RAW_DATA_DIR
 from src.staging.ingestion import StagingConfig
 
@@ -15,18 +16,17 @@ EXPECTED_COLUMNS: frozenset[str] = {
 
 UNIQUE_KEY: tuple[str, ...] = ("customer_id",)
 
-CSV_DTYPES: dict[str, str] = {
-    "customer_zip_code_prefix": "string"
-}
+CSV_DTYPES: dict[str, str] = {"customer_zip_code_prefix": "string"}
+
 
 def transform(customers: pd.DataFrame) -> pd.DataFrame:
 
     customers = customers.copy()
-    customers["customer_zip_code_prefix"] = (
-        customers["customer_zip_code_prefix"]
-        .str.zfill(5)
-    )
+    customers["customer_zip_code_prefix"] = customers[
+        "customer_zip_code_prefix"
+    ].str.zfill(5)
     return customers
+
 
 STAGING_CONFIG = StagingConfig(
     csv_path=CSV_PATH,
@@ -34,5 +34,5 @@ STAGING_CONFIG = StagingConfig(
     expected_columns=EXPECTED_COLUMNS,
     unique_key=UNIQUE_KEY,
     csv_dtypes=CSV_DTYPES,
-    transform=transform
+    transform=transform,
 )

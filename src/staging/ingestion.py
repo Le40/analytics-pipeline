@@ -1,10 +1,11 @@
-import pandas as pd
-from pathlib import Path
 from collections.abc import Callable
 from dataclasses import dataclass
+from pathlib import Path
 
-from src.staging import validation
-from src.staging import db
+import pandas as pd
+
+from src.staging import db, validation
+
 
 @dataclass(frozen=True)
 class StagingConfig:
@@ -33,7 +34,7 @@ def load_to_staging(config: StagingConfig) -> None:
     # DATE COLUMNS
     for column in config.date_columns:
         df[column] = pd.to_datetime(df[column])
-    # WHITE SPACES IN UNIQUE COLUMNS  
+    # WHITE SPACES IN UNIQUE COLUMNS
     if config.unique_key:
         for column in config.unique_key:
             if df[column].dtype == "object":
@@ -44,10 +45,8 @@ def load_to_staging(config: StagingConfig) -> None:
 
     # VALIDATION
     validation.validate_keys(
-        df=df,
-        source_name=config.table_name,
-        unique_key=config.unique_key
-    )   
+        df=df, source_name=config.table_name, unique_key=config.unique_key
+    )
 
     # LOADING
     db.load_dataframe(

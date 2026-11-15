@@ -16,7 +16,7 @@ The report explores sales performance, order fulfillment, and customer satisfact
 - Geographic distribution of sales
 - Payment method analysis
 
-### 2. Shipping & DeliveryV
+### 2. Shipping & Delivery
 ![Shipping & Delivery](screenshots/pbi-delivery.png)
 - Delivery durations and fulfillment performance
 - Late delivery rates

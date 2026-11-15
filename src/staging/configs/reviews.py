@@ -1,4 +1,3 @@
-import pandas as pd
 from src.config import RAW_DATA_DIR
 from src.staging.ingestion import StagingConfig
 
@@ -25,5 +24,5 @@ STAGING_CONFIG = StagingConfig(
     csv_path=CSV_PATH,
     table_name=TABLE_NAME,
     expected_columns=EXPECTED_COLUMNS,
-    date_columns=DATE_COLUMNS
+    date_columns=DATE_COLUMNS,
 )

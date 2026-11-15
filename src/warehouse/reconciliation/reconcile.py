@@ -1,8 +1,10 @@
-import pyodbc
-from pathlib import Path
 from datetime import date
+from pathlib import Path
+
+import pyodbc
+
 from src.config import CONNECTION_STRING
-from src.warehouse.reconciliation.config import KEY_CHECKS, FINANCIAL_CHECKS
+from src.warehouse.reconciliation.config import FINANCIAL_CHECKS, KEY_CHECKS
 
 
 def reconcile_keys(cursor: pyodbc.Cursor) -> int:
@@ -20,19 +22,15 @@ def reconcile_keys(cursor: pyodbc.Cursor) -> int:
     errors = 0
 
     for check in KEY_CHECKS:
-
         source_columns = ", ".join(check.columns.keys())
         target_columns = ", ".join(check.columns.values())
 
         comparisions = [
-            ("Missing", check.source, source_columns,
-                        check.target, target_columns),
-            ("Unexpected",   check.target, target_columns,
-                        check.source, source_columns)          
+            ("Missing", check.source, source_columns, check.target, target_columns),
+            ("Unexpected", check.target, target_columns, check.source, source_columns),
         ]
 
         for name, left_table, left_columns, right_table, right_columns in comparisions:
-
             sql = f"""
                 SELECT COUNT(*)
                 FROM (
@@ -50,6 +48,7 @@ def reconcile_keys(cursor: pyodbc.Cursor) -> int:
 
     return errors
 
+
 def reconcile_financials(cursor: pyodbc.Cursor) -> int:
     """
     Compare financial totals between staging and DWH.
@@ -66,7 +65,6 @@ def reconcile_financials(cursor: pyodbc.Cursor) -> int:
 
     for check in FINANCIAL_CHECKS:
         for source_column, target_column in check.columns.items():
-
             sql = f"""
                 SELECT 
                     (SELECT COALESCE(SUM({source_column}), 0) FROM {check.source}),
@@ -86,6 +84,7 @@ def reconcile_financials(cursor: pyodbc.Cursor) -> int:
 
     return errors
 
+
 def reconcile_dates(cursor: pyodbc.Cursor) -> int:
     """Verify that the DWH contains every date within the staging date range."""
 
@@ -99,7 +98,7 @@ def reconcile_dates(cursor: pyodbc.Cursor) -> int:
     if missing_days:
         print(f"DATES | FAIL | Missing: {missing_days}")
     else:
-        print(f"DATES | PASS | Missing: 0")
+        print("DATES | PASS | Missing: 0")
 
     return missing_days
 
@@ -130,6 +129,7 @@ def _get_source_date_range(cursor: pyodbc.Cursor) -> tuple[date, date]:
         raise ValueError("No source dates available for reconciliation.")
 
     return min_date, max_date
+
 
 def reconcile_translations(cursor: pyodbc.Cursor) -> int:
     """Validate category coverage, translation accuracy, and consistency."""

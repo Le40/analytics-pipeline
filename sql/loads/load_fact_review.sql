@@ -13,6 +13,7 @@ INSERT INTO dw.fact_review (
     review_id,
     order_id,
     customer_key,
+    location_key,
     send_date_key,
     answer_date_key,
     score,

@@ -1,5 +1,6 @@
 import pyodbc
-from src.config import DWH_LOADS_DIR, CONNECTION_STRING
+
+from src.config import CONNECTION_STRING, DWH_LOADS_DIR
 from src.warehouse.reconciliation.reconcile import reconcile
 
 DW_LOAD_FILES = (
@@ -23,6 +24,7 @@ def execute_load_scripts(cursor: pyodbc.Cursor) -> None:
         sql = (DWH_LOADS_DIR / file_name).read_text(encoding="utf-8")
         cursor.execute(sql)
 
+
 def load_warehouse() -> None:
     connection = pyodbc.connect(CONNECTION_STRING)
 
@@ -43,6 +45,7 @@ def load_warehouse() -> None:
 
     finally:
         connection.close()
+
 
 if __name__ == "__main__":
     load_warehouse()
