@@ -1,0 +1,53 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "orders.avg_carrier_delivery_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Orders",
+			          "ConceptualProperty": "Avg Carrier Delivery Days"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Carrier Delivery": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "orders.avg_shipping_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Orders",
+			          "ConceptualProperty": "Avg Shipping Days"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Shipping": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

@@ -15,3 +15,13 @@ PROJECT_STATE.md
 **/Debug/
 **/Release/
 *.dacpac
+
+# POWERBI
+# Power BI local settings
+**/.pbi/localSettings.json
+
+# Power BI cached model data
+**/.pbi/cache.abf
+
+# Optional: exclude backup PBIX files
+*.pbix

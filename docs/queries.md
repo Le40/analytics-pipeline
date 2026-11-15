@@ -83,3 +83,4 @@ group by purchases_count
 order by purchases_count
 
 only 2.25 % return
+
